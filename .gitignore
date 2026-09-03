@@ -7,3 +7,4 @@ blob-report
 .vite
 *.log
 .DS_Store
+.semgrep
