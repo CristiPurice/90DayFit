@@ -1,0 +1,19 @@
+/* Tema implicită: C, „Antrenorul”. Alte teme vor redefini aceleași variabile sub [data-theme="..."]. */
+:root,
+[data-theme='coach'] {
+  --bg: #1b3fd6;
+  --fg: #ffffff;
+  --muted: #c6d2ff;
+  --card: #ffffff;
+  --card-fg: #0f1a3d;
+  --card-muted: #5a6690;
+  --line: #e3e7f3;
+  --accent: #ffd23f;
+  --accent-fg: #0f1a3d;
+  --good: #1f9d63;
+  --warn: #d98a1f;
+  --danger: #c0392b;
+  --tab-bg: #122ea8;
+  --tab-fg: #ffffff;
+  --font: 'Archivo', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
