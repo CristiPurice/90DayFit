@@ -52,8 +52,8 @@ export function ProgressPage({ dateKey = today() }: ProgressPageProps) {
 
   const avg = sevenDayAverage(input.weights, dateKey)
   const progress = avg === null ? null : weightProgress(startKg, targetKg, avg)
-  const wPoints = weightSeries(input.weights.filter((w) => w.date >= startDate), startDate)
-  const bpPoints = bpSeries(bpRows.filter((b) => b.date >= startDate)).slice(-40)
+  const wPoints = weightSeries(input.weights, startDate)
+  const bpPoints = bpSeries(bpRows).slice(-40)
 
   const weeks = weeksUntil(dateKey, startDate)
   const metricsByWeek = weeks.map((w) => weekMetrics(w.weekNo, input, startDate))
