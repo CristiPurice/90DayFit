@@ -161,6 +161,33 @@ export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps
         </div>
       </Card>
 
+      <Card label="Pași din Sănătate">
+        <CardLabel>Pași din aplicația Sănătate</CardLabel>
+        <p className="mt-1 text-sm text-card-muted">
+          iPhone-ul nu lasă o aplicație web să citească pașii direct. O Comandă rapidă îi copiază, iar tu apeși „Lipește din Sănătate” în cardul Pași.
+        </p>
+        <ol className="mt-3 flex list-decimal flex-col gap-2 pl-5 text-sm">
+          <li>Deschide aplicația <b>Comenzi rapide</b>, apasă <b>+</b>, apoi <b>Adaugă acțiune</b>.</li>
+          <li>Caută <b>Găsește mostre de sănătate</b>. Setează: Tip <b>Pași</b>, filtru <b>Data de start</b> este <b>Azi</b>, ordonare oricare.</li>
+          <li>Adaugă <b>Calculează statistici</b> pe rezultat, operația <b>Sumă</b>.</li>
+          <li>Adaugă <b>Copiază în clipboard</b>. Numește comanda „Pașii de azi”.</li>
+          <li>Opțional: în tab-ul <b>Automatizări</b>, „Oră din zi” 21:00, rulează comanda automat și fără confirmare.</li>
+        </ol>
+        <p className="mt-2 text-xs text-card-muted">Seara: rulezi comanda (sau rulează singură), deschizi aplicația, Pași, Lipește din Sănătate, Salvează.</p>
+      </Card>
+
+      <Card label="Memento-uri">
+        <CardLabel>Memento-uri</CardLabel>
+        <p className="mt-1 text-sm text-card-muted">
+          Notificările programate pentru o aplicație web cer un server; până la sincronizarea în cloud, cel mai sigur e o Automatizare din Comenzi rapide, care merge și cu telefonul blocat.
+        </p>
+        <ol className="mt-3 flex list-decimal flex-col gap-2 pl-5 text-sm">
+          <li>Comenzi rapide, tab-ul <b>Automatizări</b>, <b>+</b>, <b>Oră din zi</b>.</li>
+          <li>Ora <b>07:00</b>, zilnic, <b>Rulează imediat</b>. Acțiune: <b>Afișează notificare</b> cu textul „Tensiunea de dimineață, apoi 90 Day Fit”.</li>
+          <li>Repetă pentru <b>22:00</b> cu „Tensiunea de seară și pașii”, iar luni, miercuri, vineri la <b>17:30</b> cu „Sala: Ziua A/B/C”.</li>
+        </ol>
+      </Card>
+
       <Card>
         <CardLabel>Backup</CardLabel>
         <p className="mt-1 text-sm text-card-muted">
