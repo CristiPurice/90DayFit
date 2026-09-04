@@ -135,7 +135,7 @@ export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps
           <Button variant="accent" full onClick={doExport} disabled={busy}>
             Exportă backup
           </Button>
-          <Button variant="ghost" full onClick={() => fileRef.current?.click()} disabled={busy} className="border-line text-card-fg">
+          <Button variant="ghost" full onClick={() => fileRef.current?.click()} disabled={busy}>
             Importă backup
           </Button>
           <input
@@ -153,7 +153,7 @@ export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps
         <CardLabel>Ștergere</CardLabel>
         <p className="mt-1 text-sm text-card-muted">Șterge toate datele de pe acest telefon, inclusiv PIN-ul. Nu se poate anula.</p>
         <div className="mt-3">
-          <Button variant="ghost" full onClick={() => setConfirmDelete(true)} disabled={busy} className="border-danger text-danger">
+          <Button variant="ghost" full onClick={() => setConfirmDelete(true)} disabled={busy} className="text-danger">
             Șterge toate datele
           </Button>
         </div>
@@ -166,7 +166,7 @@ export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps
         <Button full onClick={doImport} disabled={busy}>
           Da, înlocuiește
         </Button>
-        <Button variant="ghost" full onClick={() => setPending(null)}>
+        <Button variant="ghost" full onClick={() => setPending(null)} className="text-muted">
           Renunță
         </Button>
       </Sheet>
@@ -176,7 +176,7 @@ export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps
         <Button full onClick={doDelete} disabled={busy} className="bg-danger text-white">
           Da, șterge tot
         </Button>
-        <Button variant="ghost" full onClick={() => setConfirmDelete(false)}>
+        <Button variant="ghost" full onClick={() => setConfirmDelete(false)} className="text-muted">
           Renunță
         </Button>
       </Sheet>
