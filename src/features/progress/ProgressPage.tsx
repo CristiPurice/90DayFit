@@ -10,7 +10,8 @@ import { db } from '@/data/db'
 import { getAllSettings } from '@/data/repo/settings'
 import { listReviews } from '@/data/repo/reviews'
 import { listWaist } from '@/data/repo/waist'
-import { BpChart, CHART, Legend, WeeklyBars, WeightChart } from './charts'
+import { BpChart, Legend, WeeklyBars, WeightChart } from './charts'
+import { useChartColors } from './useChartColors'
 import { WaistCard } from './WaistCard'
 import { ReviewCard } from './ReviewCard'
 
@@ -37,6 +38,7 @@ function useProgressData(from: string) {
 
 export function ProgressPage({ dateKey = today() }: ProgressPageProps) {
   const settings = useLiveQuery(getAllSettings, [])
+  const CHART = useChartColors()
   const startDate = settings?.startDate ?? PLAN.startDate
   const data = useProgressData(addDays(startDate, -14))
 
@@ -68,7 +70,7 @@ export function ProgressPage({ dateKey = today() }: ProgressPageProps) {
         <div className="flex items-end justify-between gap-3">
           <div>
             <CardLabel>Media 7 zile</CardLabel>
-            {avg === null ? <p className="mt-1 text-xl font-black uppercase text-bg">Fără cântăriri</p> : <BigNumber value={formatKg(avg)} suffix="kg" />}
+            {avg === null ? <p className="mt-1 text-xl font-black uppercase text-primary">Fără cântăriri</p> : <BigNumber value={formatKg(avg)} suffix="kg" />}
           </div>
           {progress && (
             <div className="text-right">

@@ -54,7 +54,7 @@ export function Onboarding({ onDone }: OnboardingProps) {
         <p className="text-xs font-bold uppercase tracking-widest text-muted">
           Pasul {index + 1} din {ORDER.length}
         </p>
-        <h1 className="text-3xl font-black uppercase tracking-tight">
+        <h1 className="font-display text-3xl font-black uppercase tracking-tight">
           {step === 'pin' && 'Alege un PIN'}
           {step === 'pin-confirm' && 'Repetă PIN-ul'}
           {step === 'start' && 'Greutatea de start'}

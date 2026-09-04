@@ -97,7 +97,7 @@ export function BpCard({ dateKey }: BpCardProps) {
                     </span>
                   </>
                 ) : (
-                  <span className="block text-base font-black uppercase text-bg">Notează</span>
+                  <span className="block text-base font-black uppercase text-primary">Notează</span>
                 )}
               </button>
             )

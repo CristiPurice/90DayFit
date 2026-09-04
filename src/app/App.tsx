@@ -13,6 +13,7 @@ import { WorkoutsPage } from '@/features/workouts/WorkoutsPage'
 import { RecipesPage } from '@/features/recipes/RecipesPage'
 import { SettingsPage } from '@/features/settings/SettingsPage'
 import { UpdateBanner } from '@/app/UpdateBanner'
+import { useTheme } from '@/app/store/theme'
 
 type Boot = { state: 'loading' } | { state: 'ready'; settings: Partial<Settings> }
 
@@ -60,6 +61,7 @@ export function App() {
   useEffect(() => {
     let alive = true
     getAllSettings().then((settings) => {
+      useTheme.getState().load(settings.theme)
       if (alive) setBoot({ state: 'ready', settings })
     })
     return () => {

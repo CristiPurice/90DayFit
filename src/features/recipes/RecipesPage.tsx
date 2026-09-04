@@ -15,7 +15,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wide ${active ? 'bg-accent text-accent-fg' : 'bg-card/15 text-fg'}`}
+      className={`rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wide ${active ? 'bg-accent text-accent-fg' : 'bg-key text-key-fg'}`}
     >
       {children}
     </button>

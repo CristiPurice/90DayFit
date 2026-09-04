@@ -39,7 +39,7 @@ export function LockScreen({ pinHash, pinSalt }: LockScreenProps) {
     <main className="flex min-h-dvh flex-col items-center justify-center gap-10 px-6">
       <div className="text-center">
         <p className="text-xs font-bold uppercase tracking-widest text-muted">Blocat</p>
-        <h1 className="text-4xl font-black uppercase tracking-tight">90 Day Fit</h1>
+        <h1 className="font-display text-4xl font-black uppercase tracking-tight">90 Day Fit</h1>
       </div>
       <PinPad
         value={pin}

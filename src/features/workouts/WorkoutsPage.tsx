@@ -67,7 +67,7 @@ export function WorkoutsPage({ dateKey = todayKey() }: WorkoutsPageProps) {
           <CardLabel>Antrenezi totuși azi?</CardLabel>
           <div className="mt-2 grid grid-cols-3 gap-2">
             {PROGRAM_IDS.map((p) => (
-              <Button key={p} variant="primary" onClick={() => setChosen(p)} className="bg-bg text-fg">
+              <Button key={p} variant="primary" onClick={() => setChosen(p)} className="bg-primary text-primary-fg">
                 {PROGRAMS[p].label}
               </Button>
             ))}
@@ -153,7 +153,7 @@ export function WorkoutsPage({ dateKey = todayKey() }: WorkoutsPageProps) {
         </Card>
       )}
 
-      <details className="rounded-3xl bg-card/15 px-4 py-3 text-fg">
+      <details className="rounded-3xl bg-key px-4 py-3 text-key-fg">
         <summary className="cursor-pointer text-sm font-black uppercase tracking-wide">Încălzire (10 min) și reguli</summary>
         <ol className="mt-2 flex list-decimal flex-col gap-1 pl-5 text-sm">
           {WARMUP.map((w) => (
@@ -194,7 +194,7 @@ export function WorkoutsPage({ dateKey = todayKey() }: WorkoutsPageProps) {
         <p className="num mt-1 text-sm text-card-muted">Notat: {workout.cardioMinutes} min</p>
         {!locked && cardioTarget > 0 && (
           <div className="mt-3 grid grid-cols-2 gap-2">
-            <Button variant="primary" onClick={() => setCardio(dateKey, cardioTarget)} className="bg-bg text-fg">
+            <Button variant="primary" onClick={() => setCardio(dateKey, cardioTarget)} className="bg-primary text-primary-fg">
               Făcut {cardioTarget} min
             </Button>
             <Button variant="ghost" onClick={() => setCardio(dateKey, 0)} className="text-card-fg">

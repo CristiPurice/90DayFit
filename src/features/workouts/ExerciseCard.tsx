@@ -118,7 +118,7 @@ export function ExerciseCard({ dateKey, exercise, plannedSets, sets, locked, onL
               digits={0}
             />
           </div>
-          <Button variant="primary" full onClick={log} disabled={saving || reps === null || (!timed && kg === null)} className="bg-bg text-fg">
+          <Button variant="primary" full onClick={log} disabled={saving || reps === null || (!timed && kg === null)} className="bg-primary text-primary-fg">
             Notează setul {nextNo}
           </Button>
         </div>

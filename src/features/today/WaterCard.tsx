@@ -34,7 +34,7 @@ export function WaterCard({ dateKey, targetMl }: WaterCardProps) {
             key={ml}
             type="button"
             onClick={() => addWaterEvent(dateKey, ml)}
-            className="num flex-1 rounded-2xl bg-bg py-3 text-base font-black text-fg active:scale-[0.98]"
+            className="num flex-1 rounded-2xl bg-primary py-3 text-base font-black text-primary-fg active:scale-[0.98]"
           >
             +{ml} ml
           </button>

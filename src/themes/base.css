@@ -11,12 +11,18 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-key: var(--key);
+  --color-key-active: var(--key-active);
+  --color-key-fg: var(--key-fg);
   --color-good: var(--good);
   --color-warn: var(--warn);
   --color-danger: var(--danger);
   --color-tab-bg: var(--tab-bg);
   --color-tab-fg: var(--tab-fg);
   --font-sans: var(--font);
+  --font-display: var(--font-display);
 }
 
 html {
@@ -36,6 +42,11 @@ body {
 
 .num {
   font-variant-numeric: tabular-nums;
+  font-family: var(--font-num);
+}
+
+.font-display {
+  font-family: var(--font-display);
 }
 
 :focus-visible {

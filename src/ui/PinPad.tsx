@@ -28,7 +28,7 @@ export function PinPad({
   }
 
   const keyClass =
-    'h-16 rounded-2xl bg-card/15 text-3xl font-black text-fg active:bg-card/30 disabled:opacity-40'
+    'h-16 rounded-2xl bg-key text-3xl font-black text-key-fg active:bg-key-active disabled:opacity-40'
 
   return (
     <div className="flex flex-col items-center gap-6" aria-label={label}>

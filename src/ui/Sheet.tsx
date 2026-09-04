@@ -35,7 +35,7 @@ export function Sheet({ open, onClose, title, children }: SheetProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative flex max-h-[92dvh] flex-col gap-5 overflow-y-auto rounded-t-3xl bg-tab-bg px-5 pt-4 text-fg"
+        className="relative flex max-h-[92dvh] flex-col gap-5 overflow-y-auto rounded-t-3xl border-t border-line bg-tab-bg px-5 pt-4 text-fg"
         style={{ paddingBottom: 'calc(20px + env(safe-area-inset-bottom))' }}
       >
         <div className="flex items-center justify-between">

@@ -14,7 +14,7 @@ export function Page({ title, eyebrow, action, children }: PageProps) {
       <header className="flex items-end justify-between gap-3">
         <div>
           {eyebrow && <p className="text-xs font-bold uppercase tracking-widest text-muted">{eyebrow}</p>}
-          <h1 className="text-3xl font-black uppercase tracking-tight">{title}</h1>
+          <h1 className="font-display text-3xl font-black uppercase tracking-tight">{title}</h1>
         </div>
         {action}
       </header>

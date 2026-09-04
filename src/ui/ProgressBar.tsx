@@ -5,7 +5,7 @@ export interface ProgressBarProps {
 }
 
 const tones = {
-  bg: 'bg-bg',
+  bg: 'bg-primary',
   accent: 'bg-accent',
   good: 'bg-good',
   warn: 'bg-warn',
