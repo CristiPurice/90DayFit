@@ -9,6 +9,7 @@ import { WaterCard } from './WaterCard'
 import { StepsCard } from './StepsCard'
 import { BpCard } from './BpCard'
 import { MealsCard } from './MealsCard'
+import { WorkoutCard } from './WorkoutCard'
 
 export interface TodayPageProps {
   /** Pentru teste; implicit ziua curentă. */
@@ -44,6 +45,7 @@ export function TodayPage({ dateKey = todayKey() }: TodayPageProps) {
         <WaterCard dateKey={dateKey} targetMl={PLAN.waterTargetMl} />
         <StepsCard dateKey={dateKey} startDate={startDate} />
       </div>
+      <WorkoutCard dateKey={dateKey} />
       <BpCard dateKey={dateKey} />
       <MealsCard dateKey={dateKey} />
     </Page>
