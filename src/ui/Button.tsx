@@ -5,7 +5,8 @@ type Variant = 'accent' | 'primary' | 'ghost'
 const styles: Record<Variant, string> = {
   accent: 'bg-accent text-accent-fg',
   primary: 'bg-card text-card-fg',
-  ghost: 'bg-transparent text-fg border border-fg/30',
+  // Moștenește culoarea textului din context (alb pe fundal cobalt, închis pe card alb).
+  ghost: 'bg-transparent border border-current',
 }
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
