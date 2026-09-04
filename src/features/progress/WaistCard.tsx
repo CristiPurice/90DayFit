@@ -44,7 +44,7 @@ export function WaistCard({ entries, startCm, todayKey }: WaistCardProps) {
         <div className="flex items-end justify-between gap-3">
           <div>
             <CardLabel>Talie · duminica, la ombilic</CardLabel>
-            {last ? <BigNumber value={formatKg(last.cm)} suffix="cm" /> : <p className="mt-1 text-2xl font-black uppercase text-bg">Măsoară talia</p>}
+            {last ? <BigNumber value={formatKg(last.cm)} suffix="cm" /> : <p className="mt-1 text-2xl font-black uppercase text-primary">Măsoară talia</p>}
           </div>
           <div className="text-right">
             <CardLabel>Start</CardLabel>

@@ -33,7 +33,7 @@ export function WorkoutCard({ dateKey }: WorkoutCardProps) {
     <Card>
       <div className="flex items-center justify-between">
         <CardLabel>Antrenament</CardLabel>
-        <Link to="/sala" className="text-xs font-bold uppercase tracking-wide text-bg">
+        <Link to="/sala" className="text-xs font-bold uppercase tracking-wide text-primary">
           Deschide sala
         </Link>
       </div>

@@ -62,7 +62,7 @@ export function WeightCard({ dateKey, startKg, targetKg }: WeightCardProps) {
             {today ? (
               <BigNumber value={formatKg(today.kg)} suffix="kg" size="xl" />
             ) : (
-              <p className="mt-1 text-2xl font-black uppercase tracking-tight text-bg">Notează greutatea</p>
+              <p className="mt-1 text-2xl font-black uppercase tracking-tight text-primary">Notează greutatea</p>
             )}
           </div>
           <div className="text-right">

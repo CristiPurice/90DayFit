@@ -6,6 +6,8 @@ import { Button } from '@/ui/Button'
 import { Sheet } from '@/ui/Sheet'
 import { todayKey } from '@/domain/format'
 import { BackupError, backupFileName, clearAllData, exportBackup, importBackup, validateBackup } from '@/data/backup'
+import { THEMES } from '@/themes/themes'
+import { useTheme } from '@/app/store/theme'
 
 export interface SettingsPageProps {
   /** După ștergerea completă. Implicit: reîncarcă aplicația, care revine la onboarding. */
@@ -44,6 +46,8 @@ export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [busy, setBusy] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
+  const theme = useTheme((s) => s.theme)
+  const chooseTheme = useTheme((s) => s.choose)
 
   async function doExport() {
     setBusy(true)
@@ -125,6 +129,37 @@ export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps
           {notice.text}
         </p>
       )}
+
+      <Card label="Temă">
+        <CardLabel>Temă</CardLabel>
+        <p className="mt-1 text-sm text-card-muted">Se aplică instant și rămâne salvată.</p>
+        <div role="radiogroup" aria-label="Temă" className="mt-3 flex flex-col gap-2">
+          {THEMES.map((t) => {
+            const on = t.id === theme
+            return (
+              <button
+                key={t.id}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                onClick={() => chooseTheme(t.id)}
+                className={`flex items-center gap-3 rounded-2xl border-2 p-3 text-left ${on ? 'border-primary' : 'border-line'}`}
+              >
+                <span aria-hidden="true" className="flex flex-none overflow-hidden rounded-xl" style={{ width: 56, height: 40, background: t.swatch[0] }}>
+                  <span className="m-1.5 flex flex-1 items-end rounded-lg p-1" style={{ background: t.swatch[1] }}>
+                    <span className="h-2 w-6 rounded-full" style={{ background: t.swatch[2] }} />
+                  </span>
+                </span>
+                <span className="flex-1">
+                  <span className="block text-base font-black leading-tight">{t.name}</span>
+                  <span className="block text-xs text-card-muted">{t.blurb}</span>
+                </span>
+                {on && <span className="text-xs font-black uppercase text-primary">Activă</span>}
+              </button>
+            )
+          })}
+        </div>
+      </Card>
 
       <Card>
         <CardLabel>Backup</CardLabel>

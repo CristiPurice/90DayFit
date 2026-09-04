@@ -48,7 +48,7 @@ export function StepsCard({ dateKey, startDate }: StepsCardProps) {
           <div>
             <CardLabel>Pași</CardLabel>
             {count === undefined ? (
-              <p className="mt-1 text-2xl font-black uppercase tracking-tight text-bg">Notează pașii</p>
+              <p className="mt-1 text-2xl font-black uppercase tracking-tight text-primary">Notează pașii</p>
             ) : (
               <BigNumber value={formatInt(count)} suffix={`/ ${formatInt(target)}`} />
             )}

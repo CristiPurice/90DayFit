@@ -15,7 +15,7 @@ export function MealsCard({ dateKey }: MealsCardProps) {
     <Card>
       <div className="flex items-center justify-between">
         <CardLabel>Mesele de azi · {formatInt(totals.kcal)} kcal</CardLabel>
-        <Link to="/mese" className="text-xs font-bold uppercase tracking-wide text-bg">
+        <Link to="/mese" className="text-xs font-bold uppercase tracking-wide text-primary">
           Vezi mesele
         </Link>
       </div>

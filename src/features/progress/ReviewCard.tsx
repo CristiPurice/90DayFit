@@ -63,7 +63,7 @@ export function ReviewCard({ metrics, prevMetrics, existing, todayKey }: ReviewC
           O singură schimbare pe săptămână. Dacă totul merge, schimbarea este „nimic”.
         </p>
         <div className="mt-3">
-          <Button variant="primary" full onClick={begin} className="bg-bg text-fg">
+          <Button variant="primary" full onClick={begin} className="bg-primary text-primary-fg">
             {existing ? 'Vezi sau modifică evaluarea' : 'Fă evaluarea de duminică'}
           </Button>
         </div>
