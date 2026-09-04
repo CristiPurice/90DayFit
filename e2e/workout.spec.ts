@@ -38,7 +38,7 @@ test('sala: somn, seturi, cronometru, cardio, încheiere, persistență', async 
   // Persistență
   await page.reload()
   await typePin(page, '1234')
-  await expect(page.getByText(/Încheiat ✓ · 1 seturi/)).toBeVisible()
-  await page.getByRole('link', { name: 'Sală' }).click()
   await expect(page.getByText('Antrenament încheiat')).toBeVisible()
+  await page.getByRole('link', { name: 'Azi' }).click()
+  await expect(page.getByText(/Încheiat ✓ · 1 seturi/)).toBeVisible()
 })

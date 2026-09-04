@@ -210,6 +210,7 @@ export function WorkoutsPage({ dateKey = todayKey() }: WorkoutsPageProps) {
         </Button>
       )}
 
+      {(timer.running || timer.remaining > 0) && <div aria-hidden="true" className="h-28" />}
       <RestTimer timer={timer} />
     </Page>
   )
