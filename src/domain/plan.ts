@@ -20,12 +20,25 @@ export const PLAN = {
 } as const
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000
+const pad2 = (n: number) => String(n).padStart(2, '0')
 
 /** Interpretează 'aaaa-ll-zz' ca dată locală la miezul nopții. */
 export function dateFromKey(key: string): Date {
   const [y, m, d] = key.split('-').map(Number)
   if (!y || !m || !d) throw new Error(`Cheie de dată invalidă: ${key}`)
   return new Date(y, m - 1, d)
+}
+
+/** Data locală → 'aaaa-ll-zz'. */
+export function keyFromDate(date: Date): string {
+  return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`
+}
+
+/** Adaugă (sau scade) zile calendaristice unei chei de dată. */
+export function addDays(dateKey: string, delta: number): string {
+  const d = dateFromKey(dateKey)
+  d.setDate(d.getDate() + delta)
+  return keyFromDate(d)
 }
 
 /** Ziua planului: 1 la data de start, 91 la final. Sub 1 înainte de start. */
