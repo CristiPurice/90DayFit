@@ -14,7 +14,7 @@ describe('backup', () => {
     await setSetting('theme', 'coach')
     const b = await exportBackup()
     expect(b.app).toBe('90dayfit')
-    expect(b.schema).toBe(1)
+    expect(b.schema).toBe(2)
     expect(b.tables.weights).toHaveLength(1)
     expect(b.tables.bp).toHaveLength(1)
     expect(b.tables.settings).toEqual([{ key: 'theme', value: 'coach' }])

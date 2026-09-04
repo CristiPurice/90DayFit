@@ -65,9 +65,26 @@ export interface ReviewEntry {
   decision: string
 }
 
+export interface WaistEntry {
+  date: DateKey
+  cm: number
+}
+
 export interface SettingRow {
   key: string
   value: unknown
+}
+
+const STORES_V1 = {
+  weights: 'date',
+  water: 'date',
+  steps: 'date',
+  bp: '[date+slot],date',
+  workouts: 'date',
+  sets: '++id,date',
+  meals: '[date+slot],date',
+  reviews: 'weekNo',
+  settings: 'key',
 }
 
 export class AppDB extends Dexie {
@@ -79,21 +96,14 @@ export class AppDB extends Dexie {
   sets!: EntityTable<SetEntry, 'id'>
   meals!: EntityTable<MealEntry, 'date'>
   reviews!: EntityTable<ReviewEntry, 'weekNo'>
+  waist!: EntityTable<WaistEntry, 'date'>
   settings!: EntityTable<SettingRow, 'key'>
 
   constructor(name = 'ninetyDayFit') {
     super(name)
-    this.version(1).stores({
-      weights: 'date',
-      water: 'date',
-      steps: 'date',
-      bp: '[date+slot],date',
-      workouts: 'date',
-      sets: '++id,date',
-      meals: '[date+slot],date',
-      reviews: 'weekNo',
-      settings: 'key',
-    })
+    this.version(1).stores(STORES_V1)
+    // v2 (faza 4): măsurătoarea săptămânală a taliei.
+    this.version(2).stores({ ...STORES_V1, waist: 'date' })
   }
 }
 

@@ -1,14 +1,14 @@
 import { db } from './db'
 
-export const BACKUP_SCHEMA = 1
-const TABLES = ['weights', 'water', 'steps', 'bp', 'workouts', 'sets', 'meals', 'reviews', 'settings'] as const
+export const BACKUP_SCHEMA = 2
+const TABLES = ['weights', 'water', 'steps', 'bp', 'workouts', 'sets', 'meals', 'reviews', 'waist', 'settings'] as const
 type TableName = (typeof TABLES)[number]
 
 export interface Backup {
   app: '90dayfit'
   schema: number
   exportedAt: string
-  tables: Record<TableName, unknown[]>
+  tables: Partial<Record<TableName, unknown[]>>
 }
 
 export class BackupError extends Error {
