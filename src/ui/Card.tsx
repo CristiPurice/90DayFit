@@ -4,6 +4,7 @@ export interface CardProps {
   children: ReactNode
   /** Dacă e setat, cardul întreg devine buton (deschide un sheet). */
   onPress?: () => void
+  /** Nume accesibil: pentru buton devine aria-label, pentru secțiune la fel. */
   label?: string
   className?: string
 }
@@ -18,7 +19,11 @@ export function Card({ children, onPress, label, className = '' }: CardProps) {
       </button>
     )
   }
-  return <section className={`${base} ${className}`}>{children}</section>
+  return (
+    <section aria-label={label} className={`${base} ${className}`}>
+      {children}
+    </section>
+  )
 }
 
 export function CardLabel({ children }: { children: ReactNode }) {
