@@ -1,4 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
+import { Link } from 'react-router'
 import { Page } from '@/ui/Page'
 import { formatDate, todayKey } from '@/domain/format'
 import { PLAN, dayNumber, weekNumber } from '@/domain/plan'
@@ -27,10 +28,16 @@ export function TodayPage({ dateKey = todayKey() }: TodayPageProps) {
         ? `Start pe ${formatDate(startDate)} · azi ${formatDate(dateKey)}`
         : `După ziua 90 · ${formatDate(dateKey)}`
 
-  if (!settings) return <Page title="Azi" eyebrow={formatDate(dateKey)} />
+  const action = (
+    <Link to="/setari" className="rounded-full px-3 py-2 text-sm font-bold uppercase tracking-wide text-muted">
+      Setări
+    </Link>
+  )
+
+  if (!settings) return <Page title="Azi" eyebrow={formatDate(dateKey)} action={action} />
 
   return (
-    <Page title="Azi" eyebrow={eyebrow}>
+    <Page title="Azi" eyebrow={eyebrow} action={action}>
       <WeightCard dateKey={dateKey} startKg={startKg} targetKg={targetKg} />
       <div className="grid grid-cols-1 gap-3">
         <WaterCard dateKey={dateKey} targetMl={PLAN.waterTargetMl} />

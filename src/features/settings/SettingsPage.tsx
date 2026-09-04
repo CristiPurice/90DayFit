@@ -1,0 +1,185 @@
+import { useRef, useState } from 'react'
+import { Link } from 'react-router'
+import { Page } from '@/ui/Page'
+import { Card, CardLabel } from '@/ui/Card'
+import { Button } from '@/ui/Button'
+import { Sheet } from '@/ui/Sheet'
+import { todayKey } from '@/domain/format'
+import { BackupError, backupFileName, clearAllData, exportBackup, importBackup, validateBackup } from '@/data/backup'
+
+export interface SettingsPageProps {
+  /** După ștergerea completă. Implicit: reîncarcă aplicația, care revine la onboarding. */
+  onDeleted?: () => void
+}
+
+type Notice = { tone: 'ok' | 'err'; text: string } | null
+
+function defaultOnDeleted() {
+  window.location.hash = ''
+  window.location.reload()
+}
+
+/** Trimite fișierul prin panoul de partajare iOS dacă există, altfel îl descarcă. */
+async function deliverFile(file: File): Promise<'share' | 'download'> {
+  const nav = navigator as Navigator & { canShare?: (d: ShareData) => boolean }
+  if (typeof nav.share === 'function' && nav.canShare?.({ files: [file] })) {
+    await nav.share({ files: [file], title: file.name })
+    return 'share'
+  }
+  const url = URL.createObjectURL(file)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = file.name
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 10_000)
+  return 'download'
+}
+
+export function SettingsPage({ onDeleted = defaultOnDeleted }: SettingsPageProps) {
+  const [notice, setNotice] = useState<Notice>(null)
+  const [pending, setPending] = useState<unknown>(null)
+  const [pendingSummary, setPendingSummary] = useState('')
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  async function doExport() {
+    setBusy(true)
+    setNotice(null)
+    try {
+      const backup = await exportBackup()
+      const name = backupFileName(todayKey())
+      const file = new File([JSON.stringify(backup, null, 2)], name, { type: 'application/json' })
+      const how = await deliverFile(file)
+      setNotice({ tone: 'ok', text: how === 'share' ? `Backup pregătit: ${name}` : `Backup descărcat: ${name}` })
+    } catch (e) {
+      if ((e as Error)?.name === 'AbortError') return
+      setNotice({ tone: 'err', text: 'Exportul nu a reușit. Încearcă din nou.' })
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onFileChosen(file: File | undefined) {
+    if (!file) return
+    setNotice(null)
+    try {
+      const json: unknown = JSON.parse(await file.text())
+      const backup = validateBackup(json)
+      const t = backup.tables
+      const count = (rows: unknown[] | undefined) => rows?.length ?? 0
+      setPendingSummary(
+        `${count(t.weights)} greutăți, ${count(t.water)} zile cu apă, ${count(t.steps)} zile cu pași, ${count(t.bp)} citiri de tensiune, ${count(t.settings)} setări`,
+      )
+      setPending(json)
+    } catch (e) {
+      const msg = e instanceof BackupError ? e.message : 'Fișierul nu este un JSON valid.'
+      setNotice({ tone: 'err', text: msg })
+    } finally {
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
+  async function doImport() {
+    if (pending === null) return
+    setBusy(true)
+    try {
+      await importBackup(pending)
+      setNotice({ tone: 'ok', text: 'Import reușit. Datele au fost înlocuite.' })
+      setPending(null)
+    } catch {
+      setNotice({ tone: 'err', text: 'Importul a eșuat. Nicio dată nu a fost modificată.' })
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function doDelete() {
+    setBusy(true)
+    try {
+      await clearAllData()
+      setConfirmDelete(false)
+      onDeleted()
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <Page
+      title="Setări"
+      eyebrow="Datele tale"
+      action={
+        <Link to="/azi" className="rounded-full px-3 py-2 text-sm font-bold uppercase tracking-wide text-muted">
+          Înapoi
+        </Link>
+      }
+    >
+      {notice && (
+        <p
+          role={notice.tone === 'err' ? 'alert' : 'status'}
+          className={`rounded-2xl px-4 py-3 text-sm font-bold ${notice.tone === 'ok' ? 'bg-good text-white' : 'bg-accent text-accent-fg'}`}
+        >
+          {notice.text}
+        </p>
+      )}
+
+      <Card>
+        <CardLabel>Backup</CardLabel>
+        <p className="mt-1 text-sm text-card-muted">
+          Datele stau doar pe acest telefon. Exportă un fișier JSON în Fișiere sau iCloud Drive o dată pe săptămână.
+        </p>
+        <div className="mt-3 flex flex-col gap-2">
+          <Button variant="accent" full onClick={doExport} disabled={busy}>
+            Exportă backup
+          </Button>
+          <Button variant="ghost" full onClick={() => fileRef.current?.click()} disabled={busy} className="border-line text-card-fg">
+            Importă backup
+          </Button>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="application/json,.json"
+            aria-label="Fișier de backup"
+            className="hidden"
+            onChange={(e) => onFileChosen(e.target.files?.[0])}
+          />
+        </div>
+      </Card>
+
+      <Card>
+        <CardLabel>Ștergere</CardLabel>
+        <p className="mt-1 text-sm text-card-muted">Șterge toate datele de pe acest telefon, inclusiv PIN-ul. Nu se poate anula.</p>
+        <div className="mt-3">
+          <Button variant="ghost" full onClick={() => setConfirmDelete(true)} disabled={busy} className="border-danger text-danger">
+            Șterge toate datele
+          </Button>
+        </div>
+      </Card>
+
+      <Sheet open={pending !== null} onClose={() => setPending(null)} title="Înlocuiește datele?">
+        <p className="text-sm text-muted">
+          Backup-ul conține {pendingSummary}. Toate datele actuale de pe telefon vor fi înlocuite.
+        </p>
+        <Button full onClick={doImport} disabled={busy}>
+          Da, înlocuiește
+        </Button>
+        <Button variant="ghost" full onClick={() => setPending(null)}>
+          Renunță
+        </Button>
+      </Sheet>
+
+      <Sheet open={confirmDelete} onClose={() => setConfirmDelete(false)} title="Sigur ștergi tot?">
+        <p className="text-sm text-muted">Greutăți, apă, pași, tensiune, setări și PIN. Fără backup, nu le mai recuperezi.</p>
+        <Button full onClick={doDelete} disabled={busy} className="bg-danger text-white">
+          Da, șterge tot
+        </Button>
+        <Button variant="ghost" full onClick={() => setConfirmDelete(false)}>
+          Renunță
+        </Button>
+      </Sheet>
+    </Page>
+  )
+}

@@ -11,6 +11,7 @@ import { ProgressPage } from '@/features/progress/ProgressPage'
 import { MealsPage } from '@/features/meals/MealsPage'
 import { WorkoutsPage } from '@/features/workouts/WorkoutsPage'
 import { RecipesPage } from '@/features/recipes/RecipesPage'
+import { SettingsPage } from '@/features/settings/SettingsPage'
 import { UpdateBanner } from '@/app/UpdateBanner'
 
 type Boot = { state: 'loading' } | { state: 'ready'; settings: Partial<Settings> }
@@ -43,6 +44,7 @@ function Shell() {
         <Route path="/mese" element={<MealsPage />} />
         <Route path="/sala" element={<WorkoutsPage />} />
         <Route path="/retete" element={<RecipesPage />} />
+        <Route path="/setari" element={<SettingsPage />} />
         <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
       </Routes>
       <UpdateBanner />
