@@ -9,6 +9,7 @@ import { Button } from '@/ui/Button'
 import { formatInt } from '@/domain/format'
 import { stepTargetForDate, stepsPercent, STEPS_MAX_PER_DAY } from '@/domain/steps'
 import { getSteps, putSteps } from '@/data/repo/steps'
+import { parseClipboardSteps, readClipboardText } from '@/domain/clipboard'
 
 export interface StepsCardProps {
   dateKey: string
@@ -20,6 +21,8 @@ export function StepsCard({ dateKey, startDate }: StepsCardProps) {
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState<number | null>(null)
   const [saving, setSaving] = useState(false)
+  const [pasteError, setPasteError] = useState<string | null>(null)
+  const [pasteKey, setPasteKey] = useState(0)
   const target = stepTargetForDate(dateKey, startDate)
   const count = entry?.count
   const percent = count === undefined ? 0 : stepsPercent(count, target)
@@ -61,8 +64,34 @@ export function StepsCard({ dateKey, startDate }: StepsCardProps) {
       </Card>
 
       <Sheet open={open} onClose={() => setOpen(false)} title="Pașii de azi">
-        <NumberField label="Pași" value={draft} onChange={setDraft} min={0} max={STEPS_MAX_PER_DAY} digits={0} autoFocus />
-        <p className="text-sm text-muted">Cifra din aplicația Sănătate, seara. Contează media săptămânii.</p>
+        <NumberField key={pasteKey} label="Pași" value={draft} onChange={setDraft} min={0} max={STEPS_MAX_PER_DAY} digits={0} autoFocus />
+        <Button
+          variant="ghost"
+          full
+          className="min-h-12 text-sm text-muted"
+          onClick={async () => {
+            setPasteError(null)
+            try {
+              const n = parseClipboardSteps(await readClipboardText())
+              if (n === null) {
+                setPasteError('În clipboard nu este un număr de pași. Rulează întâi comanda rapidă.')
+                return
+              }
+              setDraft(n)
+              setPasteKey((k) => k + 1)
+            } catch (e) {
+              setPasteError((e as Error).message)
+            }
+          }}
+        >
+          Lipește din Sănătate
+        </Button>
+        {pasteError && (
+          <p role="alert" className="text-sm font-bold text-accent">
+            {pasteError}
+          </p>
+        )}
+        <p className="text-sm text-muted">Cifra din aplicația Sănătate, seara. Contează media săptămânii. Comanda rapidă e explicată în Setări.</p>
         <Button full onClick={save} disabled={draft === null || saving}>
           {saving ? 'Se salvează…' : 'Salvează'}
         </Button>
